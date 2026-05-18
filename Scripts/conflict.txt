@@ -1,4 +1,1 @@
- am Learning Docker
-Added text
-
- Pull request 
+This is practice for conflicts --rebase 
