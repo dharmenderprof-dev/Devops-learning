@@ -1,1 +1,3 @@
-This is practice for conflicts --rebase 
+This is practice for conflicts --rebase
+# It is use for maintain clean commit history in git 
+# and it is also used for avoid merge commit history  
