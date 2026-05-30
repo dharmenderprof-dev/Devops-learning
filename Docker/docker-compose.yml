@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mongodb:
     image: mongo:4.4
@@ -5,24 +7,24 @@ services:
     restart: always
     volumes:
       - docker_mongo_data:/data/db
-    # This automatically flags this single node as a replica set named rs0
+    # This command automatically starts MongoDB with replication enabled
     command: mongod --oplogSize 128 --replSet rs0
 
-  # This container waits for mongo to be ready, then legally initializes rs0
+  # This helper container initializes the replica set automatically
   mongodb-init-replica:
     image: mongo:4.4
     container_name: mongodb-init-replica
+    command: >
+      bash -c "
+      until mongo --host mongodb:27017 --eval 'printjson(rs.isMaster())' &>/dev/null; do
+        echo 'Waiting for MongoDB to start...'
+        sleep 1
+      done
+      echo 'Initializing Replica Set...'
+      mongo --host mongodb:27017 --eval 'rs.initiate({_id: \"rs0\", members: [{_id: 0, host: \"mongodb:27017\"}]})'
+      "
     depends_on:
       - mongodb
-    command: >
-      mongo --host mongodb:27017 --eval "
-        try {
-          rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'mongodb:27017'}]});
-          print('REPLICA SET INITIALIZED SUCCESSFULLY');
-        } catch(e) {
-          print('Replica set already initialized or error:', e);
-        }
-      "
 
   rocketchat:
     image: registry.rocket.chat/rocketchat/rocket.chat:5.4.10
