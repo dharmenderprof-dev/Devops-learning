@@ -1,8 +1,12 @@
-📁 DevOps Learning Repository
+# DevOps Learning Journey 🚀
 
 This repository is a structured learning journey for DevOps, covering Linux, Git, Docker, CI/CD, and real-world projects. It is organized step-by-step to track learning progress and hands-on practice.
 
-📂 Folder Structure
+---
+
+## 📂 Folder Structure
+
+```text
 devops-learning/
 │
 ├── 00-introduction/
@@ -63,26 +67,3 @@ devops-learning/
 │   └── architecture/
 │
 └── README.md
-🎯 Purpose
-Track DevOps learning step by step
-Practice real-world tools and concepts
-Build hands-on projects
-Maintain organized documentation
-🧰 Topics Covered
-Linux fundamentals
-Git & GitHub workflows
-Docker & containerization
-Docker Compose
-Ubuntu Server setup
-Networking basics
-CI/CD pipelines (GitHub Actions)
-Monitoring & logging
-Real-world DevOps projects
-🚀 Projects Included
-Rocket.Chat deployment using Docker
-Nginx server setup
-Multi-container applications
-Mini DevOps labs and experiments
-💡 Goal
-
-To build strong practical DevOps skills through consistent hands-on learning and real-world project implementation.
