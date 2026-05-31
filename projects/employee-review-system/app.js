@@ -23,10 +23,15 @@ app.get('/', (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
+  console.log("USERNAME:", username);
+  console.log("PASSWORD:", password);
+
   const result = await pool.query(
     'SELECT * FROM users WHERE username=$1 AND password=$2',
     [username, password]
   );
+
+  console.log("RESULT:", result.rows);
 
   if (result.rows.length === 0) {
     return res.send('Invalid Credentials');
