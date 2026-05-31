@@ -81,6 +81,34 @@ app.get('/reviewer', (req, res) => {
   res.render('reviewer');
 });
 
+app.post(
+  '/upload',
+  upload.single('file'),
+  async (req, res) => {
+
+    try {
+
+      const title = req.body.title;
+      const filename = req.file.filename;
+
+      await pool.query(
+        `INSERT INTO submissions
+         (title, filename, status)
+         VALUES ($1,$2,$3)`,
+        [title, filename, 'Pending']
+      );
+
+      res.send('File Uploaded Successfully');
+
+    } catch (err) {
+
+      console.error(err);
+      res.send('Upload Failed');
+
+    }
+  }
+);
+
 app.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
