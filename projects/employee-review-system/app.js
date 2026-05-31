@@ -1,4 +1,6 @@
 const express = require('express');
+const session = require('express-session');
+const pool = require('./database/db');
 
 const app = express();
 
@@ -6,10 +8,64 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req,res)=>{
-    res.send('Employee Review System Running');
+app.use(
+  session({
+    secret: 'mysecret',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.get('/', (req, res) => {
+  res.render('login');
 });
 
-app.listen(3000,()=>{
-    console.log('Server Running On Port 3000');
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  const result = await pool.query(
+    'SELECT * FROM users WHERE username=$1 AND password=$2',
+    [username, password]
+  );
+
+  if (result.rows.length === 0) {
+    return res.send('Invalid Credentials');
+  }
+
+  const user = result.rows[0];
+
+  req.session.user = user;
+
+  if (user.role === 'employee') {
+    return res.redirect('/employee');
+  }
+
+  if (user.role === 'reviewer') {
+    return res.redirect('/reviewer');
+  }
+});
+
+app.get('/employee', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+
+  res.render('employee');
+});
+
+app.get('/reviewer', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+
+  res.render('reviewer');
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+app.listen(3000, () => {
+  console.log('Server Running On Port 3000');
 });
