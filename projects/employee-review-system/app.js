@@ -1,6 +1,21 @@
 const express = require('express');
 const session = require('express-session');
 const pool = require('./database/db');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({
+  storage: storage
+});
 
 const app = express();
 
@@ -74,3 +89,4 @@ app.get('/logout', (req, res) => {
 app.listen(5000, () => {
   console.log('Server Running On Port 3000');
 });
+
