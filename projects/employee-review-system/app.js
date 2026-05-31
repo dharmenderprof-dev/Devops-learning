@@ -91,6 +91,9 @@ app.post(
       const title = req.body.title;
       const filename = req.file.filename;
 
+      const dbname = await pool.query('SELECT current_database()');
+      console.log("DATABASE:", dbname.rows[0]);
+
       await pool.query(
         `INSERT INTO submissions
          (title, filename, status)
