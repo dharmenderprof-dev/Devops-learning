@@ -101,9 +101,9 @@ app.post(
       res.send('File Uploaded Successfully');
 
     } catch (err) {
-
-      console.error(err);
-      res.send('Upload Failed');
+  console.log("UPLOAD ERROR:");
+  console.log(err);
+  res.send('Upload Failed');
 
     }
   }
