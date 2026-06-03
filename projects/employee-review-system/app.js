@@ -78,6 +78,7 @@ app.get('/employee', async (req, res) => {
   res.render('employee', {
     submissions: submissions.rows
   });
+  });
 
 app.get('/reviewer', async (req, res) => {
 
@@ -170,7 +171,6 @@ app.post('/comment/:id', async (req, res) => {
   );
 
   res.redirect('/reviewer');
-});
 });
 app.get('/logout', (req, res) => {
   req.session.destroy();
