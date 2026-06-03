@@ -152,6 +152,20 @@ app.post('/reject/:id', async (req, res) => {
   res.redirect('/reviewer');
 
 });
+app.post('/comment/:id', async (req, res) => {
+
+  const id = req.params.id;
+
+  const comment = req.body.comment;
+
+  await pool.query(
+    'UPDATE submissions SET comments=$1 WHERE id=$2',
+    [comment, id]
+  );
+
+  res.redirect('/reviewer');
+
+});
 app.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
