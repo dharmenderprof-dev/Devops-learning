@@ -128,7 +128,30 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     res.send('Upload Failed');
   }
 });
+app.post('/approve/:id', async (req, res) => {
 
+  const id = req.params.id;
+
+  await pool.query(
+    'UPDATE submissions SET status=$1 WHERE id=$2',
+    ['Approved', id]
+  );
+
+  res.redirect('/reviewer');
+
+});
+app.post('/reject/:id', async (req, res) => {
+
+  const id = req.params.id;
+
+  await pool.query(
+    'UPDATE submissions SET status=$1 WHERE id=$2',
+    ['Rejected', id]
+  );
+
+  res.redirect('/reviewer');
+
+});
 app.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/');
