@@ -96,7 +96,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     console.log("STEP 2: File extracted");
 
     const dbname = await pool.query('SELECT current_database()');
-    console.log("DATABASE:", dbname.rows[0]);
+    console.log("DATABASE NAME:", dbname.rows[0]);
 
     console.log("STEP 3: Before INSERT");
 
@@ -127,6 +127,6 @@ app.get('/logout', (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log('Server Running On Port 3000');
+  console.log('Server Running On Port 5000');
 });
 
