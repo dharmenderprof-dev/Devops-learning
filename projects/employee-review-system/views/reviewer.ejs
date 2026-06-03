@@ -24,6 +24,22 @@
     <td><%= item.title %></td>
     <td><%= item.filename %></td>
     <td><%= item.status %></td>
+<td>
+
+<form action="/approve/<%= item.id %>" method="POST" style="display:inline;">
+<button type="submit">
+Approve
+</button>
+</form>
+
+<form action="/reject/<%= item.id %>" method="POST" style="display:inline;">
+<button type="submit">
+Reject
+</button>
+</form>
+
+</td>
+
 </tr>
 
 <% }) %>
