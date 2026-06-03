@@ -65,13 +65,19 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/employee', (req, res) => {
+app.get('/employee', async (req, res) => {
+
   if (!req.session.user) {
     return res.redirect('/');
   }
 
-  res.render('employee');
-});
+  const submissions = await pool.query(
+    'SELECT * FROM submissions ORDER BY id DESC'
+  );
+
+  res.render('employee', {
+    submissions: submissions.rows
+  });
 
 app.get('/reviewer', async (req, res) => {
 
