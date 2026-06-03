@@ -73,12 +73,20 @@ app.get('/employee', (req, res) => {
   res.render('employee');
 });
 
-app.get('/reviewer', (req, res) => {
+app.get('/reviewer', async (req, res) => {
+
   if (!req.session.user) {
     return res.redirect('/');
   }
 
-  res.render('reviewer');
+  const submissions = await pool.query(
+    'SELECT * FROM submissions ORDER BY id DESC'
+  );
+
+  res.render('reviewer', {
+    submissions: submissions.rows
+  });
+
 });
 
 app.post('/upload', upload.single('file'), async (req, res) => {
