@@ -116,11 +116,11 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     console.log("STEP 3: Before INSERT");
 
     await pool.query(
-      `INSERT INTO submissions
-       (title, filename, status)
-       VALUES ($1,$2,$3)`,
-      [title, filename, 'Pending']
-    );
+  `INSERT INTO submissions
+   (uploaded_by, title, filename, status)
+   VALUES ($1,$2,$3,$4)`,
+  [uploadedBy, title, filename, 'Pending']
+);
 
     console.log("STEP 4: INSERT SUCCESS");
 
