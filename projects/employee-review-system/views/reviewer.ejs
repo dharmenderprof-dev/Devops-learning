@@ -1,5 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reviewer Dashboard</title>
+</head>
+<body>
+
 <h1>Reviewer Dashboard</h1>
 
-<p>Welcome Reviewer</p>
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Filename</th>
+    <th>Status</th>
+</tr>
+
+<% submissions.forEach(item => { %>
+
+<tr>
+    <td><%= item.id %></td>
+    <td><%= item.title %></td>
+    <td><%= item.filename %></td>
+    <td><%= item.status %></td>
+</tr>
+
+<% }) %>
+
+</table>
+
+<br>
 
 <a href="/logout">Logout</a>
+
+</body>
+</html>
+
