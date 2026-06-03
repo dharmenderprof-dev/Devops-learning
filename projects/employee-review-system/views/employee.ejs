@@ -31,6 +31,32 @@
 
 <br><br>
 
+<br><br>
+
+<h3>My Submissions</h3>
+
+<table border="1">
+
+<tr>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Comment</th>
+</tr>
+
+<% submissions.forEach(item => { %>
+
+<tr>
+    <td><%= item.title %></td>
+    <td><%= item.status %></td>
+    <td><%= item.comments || '' %></td>
+</tr>
+
+<% }) %>
+
+</table>
+
+<br><br>
+
 <a href="/logout">Logout</a>
 
 </body>
