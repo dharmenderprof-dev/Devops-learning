@@ -170,7 +170,7 @@ app.post('/comment/:id', async (req, res) => {
   );
 
   res.redirect('/reviewer');
-
+});
 });
 app.get('/logout', (req, res) => {
   req.session.destroy();
