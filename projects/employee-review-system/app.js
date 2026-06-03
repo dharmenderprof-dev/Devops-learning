@@ -81,36 +81,45 @@ app.get('/reviewer', (req, res) => {
   res.render('reviewer');
 });
 
-app.post(
-  '/upload',
-  upload.single('file'),
-  async (req, res) => {
+app.post('/upload', upload.single('file'), async (req, res) => {
 
-    try {
+  try {
 
-      const title = req.body.title;
-      const filename = req.file.filename;
+    console.log("STEP 1: Route reached");
 
-      const dbname = await pool.query('SELECT current_database()');
-      console.log("DATABASE:", dbname.rows[0]);
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
 
-      await pool.query(
-        `INSERT INTO submissions
-         (title, filename, status)
-         VALUES ($1,$2,$3)`,
-        [title, filename, 'Pending']
-      );
+    const title = req.body.title;
+    const filename = req.file.filename;
 
-      res.send('File Uploaded Successfully');
+    console.log("STEP 2: File extracted");
 
-    } catch (err) {
-  console.log("UPLOAD ERROR:");
-  console.log(err);
-  res.send('Upload Failed');
+    const dbname = await pool.query('SELECT current_database()');
+    console.log("DATABASE:", dbname.rows[0]);
 
-    }
+    console.log("STEP 3: Before INSERT");
+
+    await pool.query(
+      `INSERT INTO submissions
+       (title, filename, status)
+       VALUES ($1,$2,$3)`,
+      [title, filename, 'Pending']
+    );
+
+    console.log("STEP 4: INSERT SUCCESS");
+
+    res.send('File Uploaded Successfully');
+
+  } catch (err) {
+
+    console.log("========= UPLOAD ERROR =========");
+    console.log(err);
+    console.log("========= END ERROR =========");
+
+    res.send('Upload Failed');
   }
-);
+});
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
