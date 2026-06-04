@@ -1,0 +1,31 @@
+services:
+
+  db:
+    image: postgres:16
+
+    container_name: employee-db
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Admin123!
+      POSTGRES_DB: employeeportal
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+
+    container_name: employee-app
+
+    ports:
+      - "5000:5000"
+
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
