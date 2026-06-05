@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const pool = require('./database/db');
@@ -25,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: 'mysecret',
+  secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
