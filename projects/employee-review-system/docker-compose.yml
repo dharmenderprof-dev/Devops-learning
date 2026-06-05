@@ -27,5 +27,19 @@ services:
     depends_on:
       - db
 
+  nginx:
+    image: nginx:latest
+
+    container_name: employee-nginx
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+    depends_on:
+      - app
+
 volumes:
   postgres_data:
